@@ -1,13 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  target: 'static',
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - client',
-    title: 'client',
+    titleTemplate: '%s',
+    title: 'image-uploader',
     htmlAttrs: {
       lang: 'en',
     },
@@ -21,10 +22,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['material-design-icons-iconfont/dist/material-design-icons.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/api.js', '~/plugins/vuex-persisted-state.client.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -44,9 +45,17 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+  axios: {},
+
+  env: {
+    DOMAIN_NAME: process.env.DOMAIN_NAME,
+    BASE_API_URL: process.env.BASE_API_URL,
+    CLIENT_HTTP_CACHE_DISABLE: (
+      process.env.CLIENT_HTTP_CACHE_DISABLE || 'false'
+    ).toLowerCase(),
+    CLIENT_NOTIFY_UI_ERROR: (
+      process.env.CLIENT_NOTIFY_UI_ERROR || 'false'
+    ).toLowerCase(),
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

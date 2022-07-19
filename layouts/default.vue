@@ -5,33 +5,29 @@
         <Nuxt />
       </v-container>
     </v-main>
+    <component-snackbar :style="{ left: 0, top: 0 }" />
   </v-app>
 </template>
 
 <script>
+import ComponentSnackbar from '../components/Snackbar/Snackbar'
+
 export default {
   name: 'DefaultLayout',
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
+  components: { ComponentSnackbar },
+  errorCaptured (error) {
+    const errorHandler = async (error) => {
+      const errorMessage = error.response.data.error.message
+      await this.$store.dispatch('snackbar/setErrorMessage', errorMessage)
+    }
+
+    if (error && error.message) {
+      errorHandler(error)
+      return false
+    } else if (process.env.CLIENT_NOTIFY_UI_ERROR === 'true') {
+      const errorMessage = `[UI] ${error.message}`
+      this.$store.dispatch('snackbar/setErrorMessage', errorMessage)
+      return false
     }
   },
 }
