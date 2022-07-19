@@ -6,6 +6,16 @@
       </v-container>
     </v-main>
     <component-snackbar :style="{ left: 0, top: 0 }" />
+    <v-footer color="white">
+      <v-col class="text-center pa-0 transparent">
+        Code By: Anon-kae,
+        <strong>
+          <a href="https://github.com/anon-kae">
+            My github
+          </a>
+        </strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
